@@ -1,0 +1,21 @@
+$primary-color: #ff8303;
+$background-color: #1b1a17;
+$text-color: #f0e3ca;
+$secondary-color: #242320;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  color: $text-color;
+}
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: $background-color;
+  height: 100vh;
+}
