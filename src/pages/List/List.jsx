@@ -15,6 +15,9 @@ function List() {
       setError("Please enter a title");
       return;
     }
+    setTimeout(() => {
+      setError("");
+    }, 1000);
 
     setToDos([
       ...toDos,
@@ -25,6 +28,9 @@ function List() {
     setToDoAbout("");
   }
 
+  function handleDelete(id) {
+    setToDos(toDos.filter((todo) => todo.id !== id));
+  }
   return (
     <div className="container">
       <div className={s.wrapper}>
@@ -36,7 +42,7 @@ function List() {
           handleAdd={handleAdd}
         />
         {error && <h1>{error}</h1>}
-        <ToDoList toDos={toDos} />
+        <ToDoList toDos={toDos} handleDelete={handleDelete} />
       </div>
     </div>
   );
