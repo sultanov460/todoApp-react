@@ -29,6 +29,7 @@ function List() {
 
   function handleDelete(id) {
     setToDos(toDos.filter((todo) => todo.id !== id));
+    notifySuccess("Succesfully deleted");
   }
   return (
     <div className="container">

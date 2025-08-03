@@ -2,10 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.scss";
 import App from "./App.jsx";
-import List from "./pages/List/LIst.jsx";
+import List from "./pages/List/List.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Sign from "./pages/Sign/Sign.jsx";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import Contact from "./pages/Contact/Contact.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,14 +17,14 @@ const router = createBrowserRouter([
     element: <List />,
   },
   {
-    path: "/sign",
-    element: <Sign />,
+    path: "/contact",
+    element: <Contact />,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-    <ToastContainer/>
+    <ToastContainer />
   </StrictMode>
 );

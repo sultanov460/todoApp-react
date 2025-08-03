@@ -9,8 +9,8 @@ export const Hero = () => {
         <Link to={"/list"} className={s.btn}>
           Get started
         </Link>
-        <Link to={"/sign"} className={s.btn}>
-          Sign Up
+        <Link to={"/contact"} className={s.btn}>
+          Contact
         </Link>
       </div>
     </div>
