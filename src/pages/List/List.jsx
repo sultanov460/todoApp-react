@@ -2,27 +2,26 @@ import { useState } from "react";
 import { ToDoInput } from "../../components/ToDoInput/ToDoInput";
 import s from "./style.module.scss";
 import { ToDoList } from "../../components/ToDoList/ToDoList";
+import { notifySuccess, notifyWarning } from "../../utils/notifications.js";
 
 function List() {
   const [toDos, setToDos] = useState([]);
   const [toDoTitle, setToDoTitle] = useState("");
   const [toDoAbout, setToDoAbout] = useState("");
-  const [error, setError] = useState(null);
 
   function handleAdd(event) {
     event.preventDefault();
     if (!toDoTitle) {
-      setError("Please enter a title");
+      notifyWarning("Please enter a title!");
       return;
     }
-    setTimeout(() => {
-      setError("");
-    }, 1000);
 
     setToDos([
       ...toDos,
       { id: Date.now(), title: toDoTitle, description: toDoAbout },
     ]);
+
+    notifySuccess("Successfully added!");
 
     setToDoTitle("");
     setToDoAbout("");
@@ -41,7 +40,6 @@ function List() {
           setAbout={setToDoAbout}
           handleAdd={handleAdd}
         />
-        {error && <h1>{error}</h1>}
         <ToDoList toDos={toDos} handleDelete={handleDelete} />
       </div>
     </div>

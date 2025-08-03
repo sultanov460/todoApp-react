@@ -3,6 +3,7 @@ import s from "./style.module.scss";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import React from "react";
+import { notifyError, notifyWarning } from "../../utils/notifications.js";
 
 const Sign = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -17,6 +18,17 @@ const Sign = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!formData.email) {
+      notifyError("Please provide a valid email!");
+      return;
+    }
+
+    if (!formData.password) {
+      notifyError("Please provide a password!");
+      return;
+    }
+
     console.log(formData);
 
     setFormData({
@@ -24,6 +36,7 @@ const Sign = () => {
       password: "",
     });
   };
+
   const handlePassword = (e) => {
     e.preventDefault();
     setPasswordVisible(!passwordVisible);
@@ -55,10 +68,10 @@ const Sign = () => {
               <MdVisibility size={20} />
             )}
           </button>
+          <button className={s.btn} type="submit" onClick={handleSubmit}>
+            Sign Up
+          </button>
         </form>
-        <button className={s.btn} type="submit" onClick={handleSubmit}>
-          Sign Up
-        </button>
       </div>
     </div>
   );
