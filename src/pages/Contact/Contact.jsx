@@ -2,6 +2,7 @@ import React from "react";
 import s from "./style.module.scss";
 import { notifyWarning } from "../../utils/notifications";
 import { useState } from "react";
+import { Container } from "../../components/Container/Container.jsx";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,7 +30,7 @@ const Contact = () => {
   }
 
   return (
-    <div className="container">
+    <Container>
       <form className={s.group} onSubmit={handleSubmit}>
         <h1>Contact</h1>
         <input
@@ -54,7 +55,7 @@ const Contact = () => {
         ></textarea>
         <button>Submit</button>
       </form>
-    </div>
+    </Container>
   );
 };
 
