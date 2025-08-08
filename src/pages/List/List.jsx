@@ -1,29 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToDoInput } from "../../components/ToDoInput/ToDoInput";
 import s from "./style.module.scss";
 import { ToDoList } from "../../components/ToDoList/ToDoList";
 import { notifySuccess, notifyWarning } from "../../utils/notifications.js";
-import { Container } from "../../components/Container/Container.jsx";
-import { useEffect } from "react";
+import { EditInput } from "../../components/EditInput/EditInput.jsx";
 
 function List() {
-  const [toDos, setToDos] = useState([]);
+  const [toDos, setToDos] = useState(() => {
+    try {
+      const saved = localStorage.getItem("todos");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Error parsing localStorage todos:", e);
+      return [];
+    }
+  });
+
   const [toDoTitle, setToDoTitle] = useState("");
   const [toDoAbout, setToDoAbout] = useState("");
 
   useEffect(() => {
-    const saved = localStorage.getItem("todos");
-    if (saved) {
-      try {
-        setToDos(JSON.parse(saved));
-      } catch (e) {
-        console.error("Ошибка при парсинге localStorage:", e);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("toDos changed:", toDos);
     localStorage.setItem("todos", JSON.stringify(toDos));
   }, [toDos]);
 
@@ -40,7 +36,6 @@ function List() {
     ]);
 
     notifySuccess("Successfully added!");
-
     setToDoTitle("");
     setToDoAbout("");
   }
@@ -49,8 +44,17 @@ function List() {
     setToDos(toDos.filter((todo) => todo.id !== id));
     notifySuccess("Successfully deleted!");
   }
+
+  function handleUpdate(id, newTitle, newDesc) {
+    const updated = toDos.map((todo) =>
+      todo.id === id ? { ...todo, title: newTitle, description: newDesc } : todo
+    );
+    setToDos(updated);
+    notifySuccess("Successfully updated!");
+  }
+
   return (
-    <Container>
+    <div className="container">
       <div className={s.wrapper}>
         <ToDoInput
           title={toDoTitle}
@@ -59,9 +63,13 @@ function List() {
           setAbout={setToDoAbout}
           handleAdd={handleAdd}
         />
-        <ToDoList toDos={toDos} handleDelete={handleDelete} />
+        <ToDoList
+          toDos={toDos}
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate}
+        />
       </div>
-    </Container>
+    </div>
   );
 }
 
